@@ -1,5 +1,6 @@
 package com.example.coffeeshop.web;
 
+import com.example.coffeeshop.model.binding.UserLoginBindingModel;
 import com.example.coffeeshop.model.binding.UserRegisterBindingModel;
 import com.example.coffeeshop.model.service.UserServiceModel;
 import com.example.coffeeshop.service.UserService;
@@ -54,7 +55,49 @@ public class UserController {
 
         userService.registerUser(modelMapper.map(userRegisterBindingModel, UserServiceModel.class));
 
+        return "redirect:login";
+    }
+
+    @GetMapping("/users/login")
+    public String login() {
+
+        return "login";
+    }
+
+    @PostMapping("/users/login")
+    public String loginPost(@Valid UserLoginBindingModel userLoginBindingModel,
+                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        boolean isFound = true;
+
+        if (bindingResult.hasErrors()) {
+
+            redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
+
+            return "redirect:login";
+        }
+
+        UserServiceModel userServiceModel = userService.findByUsernameAndPassword(userLoginBindingModel.getUsername(), userLoginBindingModel.getPassword());
+
+        if (userServiceModel == null){
+
+            isFound = false;
+
+            redirectAttributes.addFlashAttribute("isFound", isFound);
+
+            return "redirect:login";
+        }
+
+        userService.loginUser(userServiceModel);
+
         return "redirect:/";
+    }
+
+    @ModelAttribute
+    public UserLoginBindingModel userLoginBindingModel() {
+
+        return new UserLoginBindingModel();
     }
 
     @ModelAttribute

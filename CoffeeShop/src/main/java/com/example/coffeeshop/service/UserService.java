@@ -9,4 +9,8 @@ public interface UserService {
     boolean isUsernameExist(String username);
 
     boolean isEmailExist(String email);
+
+    UserServiceModel findByUsernameAndPassword(String username, String password);
+
+    void loginUser(UserServiceModel userServiceModel);
 }
