@@ -22,7 +22,7 @@
                 </li>
                 <li th:if="${@currentUser.isLogedIn() == false}"
                     class="nav-item">
-                    <a class="nav-link" href="/">Login</a>
+                    <a class="nav-link" th:href="@{/users/login}">Login</a>
                 </li>
                 <li th:if="${@currentUser.isLogedIn() == false}"
                     class="nav-item">
