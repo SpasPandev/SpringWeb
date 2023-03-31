@@ -18,18 +18,22 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" th:href="@{/}">Home</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${@currentUser.isLogedIn() == false}"
+                    class="nav-item">
                     <a class="nav-link" href="/">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/users/register">Register</a>
+                <li th:if="${@currentUser.isLogedIn() == false}"
+                    class="nav-item">
+                    <a class="nav-link" th:href="@{/users/register}">Register</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${@currentUser.isLogedIn()}"
+                    class="nav-item">
                     <a class="nav-link" href="/">Add Order</a>
                 </li>
-                <li class="nav-item">
+                <li th:if="${@currentUser.isLogedIn()}"
+                    class="nav-item">
                     <a class="nav-link" href="/">Logout</a>
                 </li>
             </ul>
