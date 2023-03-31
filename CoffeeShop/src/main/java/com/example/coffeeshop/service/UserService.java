@@ -13,4 +13,6 @@ public interface UserService {
     UserServiceModel findByUsernameAndPassword(String username, String password);
 
     void loginUser(UserServiceModel userServiceModel);
+
+    void logout();
 }

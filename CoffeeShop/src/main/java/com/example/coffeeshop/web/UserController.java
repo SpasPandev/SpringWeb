@@ -94,6 +94,14 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/users/logout")
+    public String logout(){
+
+        userService.logout();
+
+        return "redirect:/";
+    }
+
     @ModelAttribute
     public UserLoginBindingModel userLoginBindingModel() {
 
