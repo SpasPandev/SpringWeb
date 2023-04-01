@@ -4,6 +4,7 @@ import com.example.coffeeshop.model.binding.UserLoginBindingModel;
 import com.example.coffeeshop.model.binding.UserRegisterBindingModel;
 import com.example.coffeeshop.model.service.UserServiceModel;
 import com.example.coffeeshop.service.UserService;
+import com.example.coffeeshop.util.CurrentUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -17,15 +18,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
 
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, CurrentUser currentUser, ModelMapper modelMapper) {
         this.userService = userService;
+        this.currentUser = currentUser;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/users/register")
     public String register() {
+
+        if (currentUser.isLogedIn()) {
+            return "redirect:/";
+        }
 
         return "register";
     }
@@ -60,6 +67,10 @@ public class UserController {
 
     @GetMapping("/users/login")
     public String login() {
+
+        if (currentUser.isLogedIn()) {
+            return "redirect:/";
+        }
 
         return "login";
     }

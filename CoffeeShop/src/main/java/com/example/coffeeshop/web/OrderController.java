@@ -3,6 +3,7 @@ package com.example.coffeeshop.web;
 import com.example.coffeeshop.model.binding.AddOrderBindingModel;
 import com.example.coffeeshop.model.service.OrderServiceModel;
 import com.example.coffeeshop.service.OrderService;
+import com.example.coffeeshop.util.CurrentUser;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -17,15 +18,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class OrderController {
 
     private final OrderService orderService;
+    private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
 
-    public OrderController(OrderService orderService, ModelMapper modelMapper) {
+    public OrderController(OrderService orderService, CurrentUser currentUser, ModelMapper modelMapper) {
         this.orderService = orderService;
+        this.currentUser = currentUser;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/orders/add")
     public String addOrder() {
+
+        if (!currentUser.isLogedIn()) {
+            return "redirect:/";
+        }
 
         return "order-add";
     }
@@ -48,7 +55,11 @@ public class OrderController {
     }
 
     @GetMapping("/orders/ready/{id}")
-    public String ready(@PathVariable Long id){
+    public String ready(@PathVariable Long id) {
+
+        if (!currentUser.isLogedIn()) {
+            return "redirect:/";
+        }
 
         orderService.finishOrder(id);
 
