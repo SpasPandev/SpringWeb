@@ -30,7 +30,7 @@
                 </li>
                 <li th:if="${@currentUser.isLogedIn()}"
                     class="nav-item">
-                    <a class="nav-link" href="/">Add Order</a>
+                    <a class="nav-link" th:href="@{/orders/add}">Add Order</a>
                 </li>
                 <li th:if="${@currentUser.isLogedIn()}"
                     class="nav-item">
