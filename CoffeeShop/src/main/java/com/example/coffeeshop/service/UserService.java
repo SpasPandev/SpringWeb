@@ -1,6 +1,9 @@
 package com.example.coffeeshop.service;
 
 import com.example.coffeeshop.model.service.UserServiceModel;
+import com.example.coffeeshop.model.view.UserViewModel;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -15,4 +18,6 @@ public interface UserService {
     void loginUser(UserServiceModel userServiceModel);
 
     void logout();
+
+    List<UserViewModel> findAllOrderByEmployeesCountOfOrdersDesc();
 }
