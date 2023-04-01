@@ -11,4 +11,5 @@ public interface OrderService {
 
     void saveOrder(OrderServiceModel orderServiceModel);
 
+    void finishOrder(Long id);
 }

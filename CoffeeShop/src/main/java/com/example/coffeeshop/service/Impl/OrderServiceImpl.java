@@ -49,4 +49,10 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(order);
     }
+
+    @Override
+    public void finishOrder(Long id) {
+
+        orderRepository.deleteById(id);
+    }
 }
