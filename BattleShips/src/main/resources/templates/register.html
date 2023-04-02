@@ -1,44 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Battleships Application</title>
-    <link rel="stylesheet" href="/css/reset-css.css"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/style.css"/>
-</head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/fragments/commons::head}"></head>
 <body class="body-main">
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top  rounded">
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Add Ship</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Logout</a>
-                </li>
-            </ul>
-            <img width="50px" src="/images/ufo.png" alt="Ufo image">
-        </div>
-    </nav>
-</header>
+<header th:replace="~{/fragments/commons::navigation}"></header>
 <main role="main">
     <div class="jumbotron">
         <div class="container text-light ">
             <h1 class="display-3">
                 <div class=" pl-3 font-weight-bold text-center">
-                    Register</div></h1>
+                    Register
+                </div>
+            </h1>
         </div>
         <div class="row">
             <div class="col-md-6 ">
@@ -103,7 +76,7 @@
                                        class="form-control" id="confirmPassword"
                                        aria-describedby="confirmPasswordHelpInline" placeholder="Confirm Password">
                                 <small
-                                       id="confirmPasswordHelpInline" class="bg-danger text-light rounded">
+                                        id="confirmPasswordHelpInline" class="bg-danger text-light rounded">
                                     Password length must be more than 3 characters long.
                                 </small>
                             </div>
@@ -115,8 +88,6 @@
         </div>
     </div>
 </main>
-<footer class="container text-white">
-    <p>&copy;Spring Team 2021. All rights reserved.</p>
-</footer>
+<footer th:replace="~{/fragments/commons::footer}"></footer>
 </body>
 </html>
