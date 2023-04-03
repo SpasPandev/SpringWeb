@@ -9,4 +9,8 @@ public interface UserService {
     boolean isUsernameBusy(String username);
 
     boolean isEmailBusy(String email);
+
+    UserServiceModel findByUsernameAndPassword(String username, String password);
+
+    void loginUser(UserServiceModel userServiceModel);
 }
