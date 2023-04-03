@@ -78,7 +78,7 @@ public class UserController {
         UserServiceModel userServiceModel = userService.findByUsernameAndPassword(userLoginBindingModel.getUsername(),
                 userLoginBindingModel.getPassword());
 
-        if (userServiceModel == null){
+        if (userServiceModel == null) {
 
             isFound = false;
 
@@ -88,6 +88,14 @@ public class UserController {
         }
 
         userService.loginUser(userServiceModel);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/users/logout")
+    public String logout() {
+
+        userService.logoutUser();
 
         return "redirect:/";
     }
