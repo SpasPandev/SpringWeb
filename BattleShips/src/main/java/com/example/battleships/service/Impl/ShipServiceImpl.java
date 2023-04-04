@@ -10,6 +10,10 @@ import com.example.battleships.util.CurrentUser;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class ShipServiceImpl implements ShipService {
 
@@ -41,5 +45,47 @@ public class ShipServiceImpl implements ShipService {
         ship.setUser(userRepository.findById(currentUser.getId()).orElse(null));
 
         shipRepository.save(ship);
+    }
+
+    @Override
+    public Set<ShipServiceModel> findAllAttackerShips(Long id) {
+
+        return shipRepository.findAllByUser_Id(id)
+                .stream()
+                .map(ship -> modelMapper.map(ship, ShipServiceModel.class))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<ShipServiceModel> findAllDefendersShips(Long id) {
+
+        return shipRepository.findAllByUser_IdIsNot(id)
+                .stream()
+                .map(ship -> modelMapper.map(ship, ShipServiceModel.class))
+                .collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<ShipServiceModel> findAllShipsOrderByTheirStatus() {
+
+        return shipRepository.findAllShipsOrderByTheirStatus()
+                .stream()
+                .map(ship -> modelMapper.map(ship, ShipServiceModel.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void fire(String attacker, String defender) {
+
+        Ship attackerShip = shipRepository.findByName(attacker);
+        Ship defenderShip = shipRepository.findByName(defender);
+
+        defenderShip.setHealth(defenderShip.getHealth() - attackerShip.getPower());
+
+        if (defenderShip.getHealth() <= 0) {
+            shipRepository.delete(defenderShip);
+        } else {
+            shipRepository.save(defenderShip);
+        }
     }
 }

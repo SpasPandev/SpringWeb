@@ -1,6 +1,7 @@
 package com.example.battleships.web;
 
 import com.example.battleships.model.binding.ShipAddBindingModel;
+import com.example.battleships.model.binding.ShipFireBindingModel;
 import com.example.battleships.model.service.ShipServiceModel;
 import com.example.battleships.service.ShipService;
 import jakarta.validation.Valid;
@@ -46,6 +47,23 @@ public class ShipController {
         }
 
         shipService.addNewShip(modelMapper.map(shipAddBindingModel, ShipServiceModel.class));
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/ships/fire")
+    public String fire(@Valid ShipFireBindingModel shipFireBindingModel,
+                       BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+
+            redirectAttributes.addFlashAttribute("shipFireBindingModel", shipFireBindingModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.shipFireBindingModel", bindingResult);
+
+            redirectAttributes.addFlashAttribute("message", true);
+            return "redirect:/";
+        }
+        shipService.fire(shipFireBindingModel.getAttacker(), shipFireBindingModel.getDefender());
 
         return "redirect:/";
     }
