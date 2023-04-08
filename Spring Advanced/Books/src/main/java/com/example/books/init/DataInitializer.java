@@ -1,7 +1,7 @@
 package com.example.books.init;
 
-import com.example.books.entity.Author;
-import com.example.books.entity.Book;
+import com.example.books.model.entity.Author;
+import com.example.books.model.entity.Book;
 import com.example.books.repository.AuthorRepository;
 import com.example.books.repository.BookRepository;
 import org.springframework.boot.CommandLineRunner;
