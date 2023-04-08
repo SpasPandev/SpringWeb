@@ -38,4 +38,10 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id)
                 .map(book -> modelMapper.map(book, BookDTO.class));
     }
+
+    @Override
+    public void deleteBookById(Long id) {
+
+        bookRepository.deleteById(id);
+    }
 }

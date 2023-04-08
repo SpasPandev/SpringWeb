@@ -4,6 +4,7 @@ import com.example.books.model.dto.BookDTO;
 import com.example.books.model.entity.Book;
 import com.example.books.service.BookService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +39,15 @@ public class BookController {
         } else {
             return ResponseEntity.ok(book.get());
         }
+    }
+
+    @DeleteMapping("/books/{id}")
+    public ResponseEntity<BookDTO> deleteBook(@PathVariable Long id) {
+
+        bookService.deleteBookById(id);
+
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }
