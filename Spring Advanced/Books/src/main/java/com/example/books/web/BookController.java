@@ -5,9 +5,11 @@ import com.example.books.model.entity.Book;
 import com.example.books.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class BookController {
@@ -24,5 +26,17 @@ public class BookController {
         List<BookDTO> allBooks = bookService.getAllBooks();
 
         return ResponseEntity.ok(allBooks);
+    }
+
+    @GetMapping("/books/{id}")
+    public ResponseEntity<BookDTO> getBookById(@PathVariable Long id) {
+
+        Optional<BookDTO> book = bookService.getBookById(id);
+
+        if (book.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(book.get());
+        }
     }
 }
