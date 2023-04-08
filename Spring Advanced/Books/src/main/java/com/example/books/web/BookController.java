@@ -1,14 +1,12 @@
 package com.example.books.web;
 
 import com.example.books.model.dto.BookDTO;
-import com.example.books.model.entity.Book;
 import com.example.books.service.BookService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +46,22 @@ public class BookController {
 
         return ResponseEntity
                 .noContent()
+                .build();
+    }
+
+    @PostMapping("/books")
+    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO bookDTO,
+                                              UriComponentsBuilder uriComponentsBuilder) {
+
+        Long bookId = bookService.createBook(bookDTO);
+
+        URI location = uriComponentsBuilder
+                .path("/books/{id}")
+                .buildAndExpand(bookId)
+                .toUri();
+
+        return ResponseEntity
+                .created(location)
                 .build();
     }
 }
