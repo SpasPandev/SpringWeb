@@ -63,6 +63,30 @@ public class BookServiceImpl implements BookService {
         return bookRepository.save(book).getId();
     }
 
+    @Override
+    public Long updateBook(BookDTO bookDTO) {
+
+        Book book = bookRepository.findById(bookDTO.getId()).orElse(null);
+
+        if (book == null) {
+            return null;
+        }
+
+        Author author = authorRepository.findByName(bookDTO.getAuthor().getName())
+                .orElseGet(() -> {
+                    Author newAuthor = new Author();
+                    newAuthor.setName(bookDTO.getAuthor().getName());
+
+                    return authorRepository.save(newAuthor);
+                });
+
+        book.setTitle(bookDTO.getTitle());
+        book.setIsbn(bookDTO.getIsbn());
+        book.setAuthor(author);
+
+        return bookRepository.save(book).getId();
+    }
+
     private Author createNewAuthor(String authorName) {
 
         Author newAuthor = new Author();

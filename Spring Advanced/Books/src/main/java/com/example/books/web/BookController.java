@@ -64,4 +64,18 @@ public class BookController {
                 .created(location)
                 .build();
     }
+
+    @PutMapping("books/{id}")
+    public ResponseEntity<BookDTO> update(@PathVariable Long id,
+                                          @RequestBody BookDTO bookDTO) {
+
+        bookDTO.setId(id);
+
+        Long updateBookId = bookService.updateBook(bookDTO);
+
+        return updateBookId == null ?
+                ResponseEntity.notFound().build()
+                : ResponseEntity.noContent().build();
+    }
+
 }
