@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloudinary demo</title>
+</head>
+<body>
+
+<div th:each="p : ${pictures}">
+
+    <img th:src="${p.getUrl()}" th:alt="${p.title}">
+
+    <br>
+
+    <form th:action="@{/pictures/delete}"
+          th:method="delete">
+
+        <input type="hidden" name="public_id" th:value="${p.publicId}"/>
+        <input type="submit" value="Delete"/>
+
+    </form>
+
+    <br>
+
+</div>
+
+</body>
+</html>
