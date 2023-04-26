@@ -1,5 +1,6 @@
 package com.example.books.service.Impl;
 
+import com.example.books.model.dto.AuthorDTO;
 import com.example.books.model.dto.BookDTO;
 import com.example.books.model.entity.Author;
 import com.example.books.model.entity.Book;
@@ -7,6 +8,10 @@ import com.example.books.repository.AuthorRepository;
 import com.example.books.repository.BookRepository;
 import com.example.books.service.BookService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -85,6 +90,26 @@ public class BookServiceImpl implements BookService {
         book.setAuthor(author);
 
         return bookRepository.save(book).getId();
+    }
+
+    @Override
+    public Page<BookDTO> getBooks(Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+        return bookRepository
+                .findAll(pageable)
+                .map(this::asBook);
+    }
+
+    private BookDTO asBook (Book book) {
+
+        BookDTO bookDTO = modelMapper.map(book, BookDTO.class);
+        AuthorDTO authorDTO = modelMapper.map(book.getAuthor(), AuthorDTO.class);
+
+        bookDTO.setAuthor(authorDTO);
+
+        return bookDTO;
     }
 
     private Author createNewAuthor(String authorName) {
