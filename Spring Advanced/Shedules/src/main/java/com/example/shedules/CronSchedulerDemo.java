@@ -12,8 +12,8 @@ public class CronSchedulerDemo {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(CronSchedulerDemo.class);
 
-    //  Executing on every 10 seconds
-    @Scheduled(cron = "*/10 * * * * *")
+    //  Executing on every 40 seconds with configuration
+    @Scheduled(cron = "${schedulers.cron}")
     public void showTimeWithCron() {
 
         LOGGER.info("Hello, from cron scheduler at {}", LocalDateTime.now());
