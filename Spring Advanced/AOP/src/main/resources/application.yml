@@ -1,3 +1,12 @@
 examples:
   basic.enabled: false
   modifying.enabled: false
+
+slos-config:
+  slos:
+    -
+      id: local_operation
+      threshold: 60
+    -
+      id: remote_operation
+      threshold: 500
