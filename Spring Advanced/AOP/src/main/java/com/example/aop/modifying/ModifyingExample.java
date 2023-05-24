@@ -4,9 +4,11 @@ import com.example.aop.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConditionalOnProperty(name = "examples.modifying.enabled", havingValue = "true")
 public class ModifyingExample implements CommandLineRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ModifyingExample.class);
